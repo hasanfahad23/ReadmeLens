@@ -20,11 +20,11 @@ if (!parsed.success) {
   throw new Error('Environment validation failed');
 }
 
-export const env = parsed.data;
+const env = parsed.data;
 
 export function getSiteUrl(): string {
-  if (process.env.NEXT_PUBLIC_SITE_URL) {
-    return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, '');
+  if (env.NEXT_PUBLIC_SITE_URL && env.NEXT_PUBLIC_SITE_URL !== 'http://localhost:3000') {
+    return env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, '');
   }
   if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`.replace(/\/$/, '');
@@ -32,5 +32,5 @@ export function getSiteUrl(): string {
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`.replace(/\/$/, '');
   }
-  return 'http://localhost:3000';
+  return env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, '');
 }

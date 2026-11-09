@@ -9,6 +9,9 @@
     }
   },
   "ignoreDependencies": [
-    "prettier"
+    "prettier",
+    "next",
+    "react",
+    "react-dom"
   ]
 }

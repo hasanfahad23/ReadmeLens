@@ -19,7 +19,10 @@
     "depcheck": "^1.4.7",
     "eslint": "^10.14.0",
     "knip": "^6.44.2",
+    "next": "^15.1.7",
     "prettier": "^3.9.10",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "turbo": "^2.4.4",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.72.1"
