@@ -24,6 +24,13 @@ import { extractQuickStart } from './analyzer/quickstart.js';
 import { calculateHealthScore } from './analyzer/health.js';
 import { lintMarkdown } from './linter/index.js';
 
+/**
+ * Converts a raw header text string into a URL-safe slug identifier.
+ * Strips non-alphanumeric characters, converts whitespace to hyphens, and trims bounding dashes.
+ *
+ * @param text - The raw header string (e.g., "Getting Started & Quick Setup").
+ * @returns Lowercase, URL-safe slug (e.g., "getting-started-quick-setup").
+ */
 export function slugify(text: string): string {
   return text
     .toLowerCase()
@@ -33,6 +40,13 @@ export function slugify(text: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
+/**
+ * Extracts YAML frontmatter bounded by triple-dashes (`---`) at the start of a document.
+ * Returns the parsed key-value metadata object along with the remaining Markdown body.
+ *
+ * @param content - Raw Markdown document content.
+ * @returns An object containing the extracted metadata and the cleaned content.
+ */
 export function extractFrontmatter(content: string): { metadata: DocMetadata; cleanContent: string } {
   const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
   if (!match) {
@@ -58,6 +72,12 @@ export function extractFrontmatter(content: string): { metadata: DocMetadata; cl
   return { metadata, cleanContent };
 }
 
+/**
+ * Parses Markdown heading elements (# through ######) to build a document outline.
+ *
+ * @param content - Markdown document text without frontmatter.
+ * @returns Array of HeadingItem objects with slug ID, clean display text, and heading depth level.
+ */
 export function extractHeadings(content: string): HeadingItem[] {
   const headings: HeadingItem[] = [];
   const lines = content.split('\n');
@@ -75,6 +95,13 @@ export function extractHeadings(content: string): HeadingItem[] {
   return headings;
 }
 
+/**
+ * Divides a document into discrete semantic sections demarcated by heading boundaries.
+ * Records the line ranges and text contents for contextual linting and security scanning.
+ *
+ * @param content - Clean Markdown document text.
+ * @returns Array of DocSection objects representing the document tree.
+ */
 export function extractSections(content: string): DocSection[] {
   const sections: DocSection[] = [];
   const lines = content.split('\n');
@@ -116,7 +143,12 @@ export function extractSections(content: string): DocSection[] {
   return sections;
 }
 
-// Custom strict sanitization schema allowing safe elements, attributes, badges & directives
+/**
+ * Custom strict HTML sanitization schema extending GitHub's default rehype-sanitize rules.
+ * Strictly permits safe styling classes, pre-approved badge/image attributes, link rel/target tags,
+ * and data attributes for accessible UI components, while stripping scripts, dangerous iframes,
+ * event handlers, and unknown protocols.
+ */
 export const customSanitizeSchema = {
   ...defaultSchema,
   attributes: {
@@ -132,6 +164,18 @@ export const customSanitizeSchema = {
   },
 };
 
+/**
+ * Executes the unified markdown processing pipeline:
+ * 1. remark-parse: Parses Markdown text into an MDAST syntax tree.
+ * 2. remark-gfm / remark-math / remark-directive: Expands tables, strikethrough, autolinks, math, and custom directives.
+ * 3. remark-rehype: Transforms MDAST to HAST (HTML syntax tree).
+ * 4. rehype-raw & rehype-sanitize: Parses embedded HTML and strictly sanitizes it against XSS vectors.
+ * 5. rehype-slug & rehype-autolink-headings: Generates stable anchor IDs and clickable heading anchors.
+ * 6. rehype-stringify: Serializes HAST into secure, ready-to-render HTML.
+ *
+ * @param markdown - Raw input Markdown string.
+ * @returns Sanitized and formatted HTML output string.
+ */
 export async function renderMarkdownToHtml(markdown: string): Promise<string> {
   const processor = unified()
     .use(remarkParse)
@@ -150,6 +194,20 @@ export async function renderMarkdownToHtml(markdown: string): Promise<string> {
   return String(file);
 }
 
+/**
+ * Analyzes a Markdown document comprehensively, generating:
+ * - Outline & Headings tree
+ * - Flesch Reading Ease & reading time statistics
+ * - Security threats (curl-pipe-bash, plaintext secrets, unpinned actions)
+ * - Required documentation section audit
+ * - Extracted Quick Start code snippets
+ * - Markdown linter rule violations with SARIF report compatibility
+ * - Composite 0-100 Health Score rating
+ *
+ * @param content - Raw Markdown document text.
+ * @param filePath - Optional path or filename for SARIF source mapping.
+ * @returns Structured AnalysisReport with all audit dimensions.
+ */
 export function analyzeDocument(content: string, filePath?: string): AnalysisReport {
   const { metadata, cleanContent } = extractFrontmatter(content);
   const headings = extractHeadings(cleanContent);

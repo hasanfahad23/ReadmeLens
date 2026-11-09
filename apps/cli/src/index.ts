@@ -12,6 +12,13 @@ import { defaultProviderRegistry } from '@readmelens/providers';
 
 const program = new Command();
 
+/**
+ * Command-Line Interface for ReadmeLens Pro.
+ * Provides terminal workflows for developers and CI/CD pipelines:
+ * - `score`: Analyzes health score, readability, and security threats with terminal or JSON output.
+ * - `lint`: Scans markdown rules with SARIF output support for GitHub Code Scanning integration.
+ * - `export`: Compiles Markdown into standalone HTML or JSON analysis reports.
+ */
 program
   .name('readmelens')
   .description('ReadmeLens Pro CLI: View, analyze, score, lint, and export READMEs')

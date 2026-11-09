@@ -24,5 +24,10 @@
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.72.1"
   },
+  "overrides": {
+    "tinypool": ">=2.1.2",
+    "esbuild": ">=0.28.1",
+    "katex": ">=0.18.2"
+  },
   "packageManager": "pnpm@12.18.0"
 }

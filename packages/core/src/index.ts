@@ -7,3 +7,6 @@ export * from './analyzer/missing-sections.js';
 export * from './analyzer/quickstart.js';
 export * from './analyzer/health.js';
 export * from './linter/index.js';
+export * from './security/ssrf.js';
+export * from './security/crypto.js';
+export * from './security/redaction.js';

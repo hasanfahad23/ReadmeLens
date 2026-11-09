@@ -1,9 +1,18 @@
 import type { IProviderAdapter, ParsedSource, FetchedDocFile, ProviderRepoMeta, FetchOptions } from '../types.js';
 
+/**
+ * Provider adapter for retrieving repository documentation and metadata from GitHub.
+ * Supports public and private repositories, custom branches/tags, and nested markdown files.
+ */
 export class GitHubProvider implements IProviderAdapter {
   id = 'github' as const;
   name = 'GitHub';
 
+  /**
+   * Determines if the user input string matches GitHub URL patterns or 'owner/repo' shorthand.
+   *
+   * @param input - Candidate URL or identifier string.
+   */
   canHandle(input: string): boolean {
     return (
       input.startsWith('https://github.com/') ||
@@ -12,6 +21,12 @@ export class GitHubProvider implements IProviderAdapter {
     );
   }
 
+  /**
+   * Parses GitHub URLs or repository slugs into structured target components.
+   * Extracts owner, repo name, git reference, nested doc path, and anchor fragments.
+   *
+   * @param input - Raw GitHub URL or 'owner/repo' string.
+   */
   parse(input: string): ParsedSource {
     const clean = input.trim().replace(/^https?:\/\/github\.com\//, '').replace(/^github\.com\//, '');
     const [repoPart, hashPart] = clean.split('#');

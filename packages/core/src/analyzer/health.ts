@@ -8,6 +8,9 @@ import type {
   HeadingItem,
 } from '../types.js';
 
+/**
+ * Configuration options supplied to the health scoring calculation engine.
+ */
 interface HealthCalcOptions {
   headings: HeadingItem[];
   readability: ReadabilityMetrics;
@@ -17,6 +20,19 @@ interface HealthCalcOptions {
   content: string;
 }
 
+/**
+ * Computes a standardized 0-100 documentation quality score across 7 key pillars:
+ * 1. Structure (max 15): H1 presence, section count, and heading hierarchy order.
+ * 2. Completeness (max 20): Coverage of essential sections (install, usage, license, etc.).
+ * 3. Readability (max 15): Flesch Reading Ease score and sentence length distribution.
+ * 4. Code & Quickstart (max 20): Actionable copy-paste commands and code block prevalence.
+ * 5. Media & Visuals (max 10): Presence of architecture diagrams, badges, and images.
+ * 6. Maintenance & Links (max 10): Valid external references and contributor guidelines.
+ * 7. Security (max 10): Absence of insecure command pipes, exposed secrets, and raw scripts.
+ *
+ * @param opts - Structured analysis data including headings, readability, and security threats.
+ * @returns HealthScoreResult containing the composite score, grade (A+ through F), radar breakdown, strengths, and actionable improvements.
+ */
 export function calculateHealthScore(opts: HealthCalcOptions): HealthScoreResult {
   const { headings, readability, missingSections, threats, quickStart, content } = opts;
   const strengths: string[] = [];
