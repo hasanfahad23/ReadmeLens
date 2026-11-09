@@ -1,0 +1,6 @@
+Contact: mailto:security@readmelens.dev
+Expires: 2027-11-01T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://readmelens.dev/.well-known/security.txt
+Policy: https://readmelens.dev/security
+Acknowledgments: https://readmelens.dev/security#acknowledgments
