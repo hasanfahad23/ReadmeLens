@@ -1,4 +1,4 @@
-import type { IProviderAdapter, ParsedSource, FetchedDocFile, ProviderRepoMeta, FetchOptions } from '../types.js';
+import type { IProviderAdapter, ParsedSource, FetchedDocFile, FetchOptions } from '../types.js';
 
 export class NpmProvider implements IProviderAdapter {
   id = 'npm' as const;

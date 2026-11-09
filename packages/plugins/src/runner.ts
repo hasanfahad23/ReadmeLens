@@ -26,7 +26,7 @@ export function extractRunnableBlocks(content: string): RunnableCodeBlock[] {
   return blocks;
 }
 
-export async function executeIsolatedJs(code: string, timeoutMs = 2000): Promise<CodeRunnerResult> {
+export async function executeIsolatedJs(code: string, _timeoutMs = 2000): Promise<CodeRunnerResult> {
   const startTime = Date.now();
   try {
     const logs: string[] = [];

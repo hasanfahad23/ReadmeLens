@@ -10,8 +10,6 @@ import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeStringify from 'rehype-stringify';
-import { visit } from 'unist-util-visit';
-import { toString as mdastToString } from 'mdast-util-to-string';
 
 import type {
   DocMetadata,

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { defaultProviderRegistry, GitHubProvider, NpmProvider, LocalMemoryProvider } from '../index.js';
 
 describe('@readmelens/providers', () => {

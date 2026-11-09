@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { Button, Badge, Card, HealthScoreBadge } from '../index.js';
+import { Button, Badge, HealthScoreBadge } from '../index.js';
 
 describe('@readmelens/ui', () => {
   it('renders Button with variants and accessible attributes', () => {

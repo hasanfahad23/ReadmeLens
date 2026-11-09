@@ -3,10 +3,7 @@ import {
   analyzeDocument,
   renderMarkdownToHtml,
   scanSecurityThreats,
-  calculateReadability,
-  detectMissingSections,
   extractQuickStart,
-  calculateHealthScore,
   lintMarkdown,
   formatSarif,
 } from '../index.js';
@@ -14,7 +11,7 @@ import {
 describe('@readmelens/core', () => {
   const sampleReadme = `# SuperTool
 
-> A blazing fast CLI and library for modern developers.
+> CLI and library for developers.
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://example.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

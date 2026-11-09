@@ -1,4 +1,4 @@
-import type { IProviderAdapter, ParsedSource, FetchedDocFile, ProviderRepoMeta, RepoTreeNode, FetchOptions } from '../types.js';
+import type { IProviderAdapter, ParsedSource, FetchedDocFile, ProviderRepoMeta, FetchOptions } from '../types.js';
 
 export class GitHubProvider implements IProviderAdapter {
   id = 'github' as const;

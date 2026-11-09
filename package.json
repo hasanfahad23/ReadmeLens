@@ -10,11 +10,19 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "test:e2e": "pnpm --filter @readmelens/web test:e2e",
-    "test:a11y": "pnpm --filter @readmelens/web test:a11y"
+    "test:a11y": "pnpm --filter @readmelens/web test:a11y",
+    "check:emoji": "node scripts/check-no-emoji.mjs",
+    "check:copy": "node scripts/check-copy.mjs",
+    "check:deps": "knip && depcheck --ignores=\"turbo,knip,depcheck,eslint,prettier,typescript\""
   },
   "devDependencies": {
+    "depcheck": "^1.4.7",
+    "eslint": "^10.14.0",
+    "knip": "^6.44.2",
+    "prettier": "^3.9.10",
     "turbo": "^2.4.4",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.72.1"
   },
   "packageManager": "pnpm@12.18.0"
 }

@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 import * as fs from 'node:fs';
-import * as path from 'node:path';
 import pc from 'picocolors';
 import {
   analyzeDocument,
@@ -40,7 +39,7 @@ program
         return;
       }
 
-      console.log(pc.bold(pc.cyan('\n🔍 ReadmeLens Pro — Documentation Health Report\n')));
+      console.log(pc.bold(pc.cyan('\nReadmeLens Pro -- Documentation Health Report\n')));
       console.log(`Target: ${pc.bold(target)}`);
       
       const scoreColor = report.health.score >= 85 ? pc.green : report.health.score >= 70 ? pc.yellow : pc.red;
@@ -55,20 +54,20 @@ program
       console.log(`  - Onboarding Quality: ${report.health.breakdown.onboardingQuality}/20\n`);
 
       if (report.security.threats.length > 0) {
-        console.log(pc.bold(pc.red('⚠️  Security Threats Detected:')));
+        console.log(pc.bold(pc.red('Security Threats Detected:')));
         for (const threat of report.security.threats) {
           console.log(`  [${threat.severity.toUpperCase()}] ${threat.title} (line ${threat.line || '?'})`);
           console.log(`    Snippet: ${threat.snippet || ''}`);
           console.log(`    Fix:     ${threat.remediation}\n`);
         }
       } else {
-        console.log(pc.green('✓ Security check passed: No high-risk scripts or obfuscated commands.'));
+        console.log(pc.green('[PASS] Security check: No high-risk scripts or obfuscated commands.'));
       }
 
       if (report.health.improvements.length > 0) {
-        console.log(pc.bold(pc.yellow('\n💡 Suggestions for Improvement:')));
+        console.log(pc.bold(pc.yellow('\nSuggestions for Improvement:')));
         for (const imp of report.health.improvements) {
-          console.log(`  • ${imp}`);
+          console.log(`  - ${imp}`);
         }
       }
       console.log('');
@@ -105,7 +104,7 @@ program
       console.log(pc.bold(`\nLinting ${target}...\n`));
 
       if (result.violations.length === 0) {
-        console.log(pc.green('✓ Zero lint violations found! Ready to ship.'));
+        console.log(pc.green('[PASS] Zero lint violations found.'));
         process.exit(0);
       }
 
@@ -148,7 +147,7 @@ program
 
       if (options.output) {
         fs.writeFileSync(options.output, outputData, 'utf-8');
-        console.log(pc.green(`✓ Exported to ${options.output}`));
+        console.log(pc.green(`[OK] Exported to ${options.output}`));
       } else {
         console.log(outputData);
       }

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://unpkg.com/knip@5/overview/configuration-types.json",
+  "workspaces": {
+    ".": {
+      "entry": ["scripts/*.mjs"]
+    },
+    "apps/web": {
+      "entry": ["src/app/**/*.{ts,tsx}", "tests/**/*.ts"]
+    }
+  },
+  "ignoreDependencies": [
+    "prettier"
+  ]
+}

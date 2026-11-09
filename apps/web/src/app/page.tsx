@@ -3,29 +3,28 @@
 import React, { useState, useEffect } from 'react';
 import { analyzeDocument, renderMarkdownToHtml, type AnalysisReport } from '@readmelens/core';
 import { transformDirectivesToHtml, transformDiagramsForRendering } from '@readmelens/plugins';
-import { Button, Badge, Card, HealthScoreBadge } from '@readmelens/ui';
 import {
-  FileText,
-  Shield,
-  Zap,
-  CheckCircle2,
-  AlertTriangle,
-  Code2,
-  Terminal,
-  BookOpen,
-  ArrowRight,
-  Sparkles,
-  Download,
-  Copy,
-  Clock,
-  ExternalLink,
-  Layers,
-} from 'lucide-react';
+  Button,
+  Badge,
+  Card,
+  HealthScoreBadge,
+  IconCopy,
+  IconCheckCircle,
+  IconAlertTriangle,
+  IconTerminal,
+  IconShield,
+  IconCode,
+  IconBook,
+  IconClock,
+  IconLayers,
+  IconDownload,
+  IconFile,
+} from '@readmelens/ui';
 
 const SAMPLE_DOCS = {
   supertool: `# SuperTool Pro
 
-> Blazing-fast CLI and developer platform for modern software teams.
+> Command-line interface and documentation platform for software teams.
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://example.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -84,7 +83,7 @@ flowchart LR
 
 ## Contributing
 
-We welcome community pull requests! Review the contributing guidelines before opening an issue.
+We welcome community pull requests. Review the contributing guidelines before opening an issue.
 
 ## License
 
@@ -161,7 +160,7 @@ export default function HomePage() {
               <Badge variant="info">v1.0.0 Monorepo</Badge>
             </h1>
             <p className="text-slate-400 text-sm mt-1">
-              Next-generation documentation platform: AST parser, 0-100 health scoring, security audit, and accessible reader.
+              Documentation platform: AST parser, 0-100 health scoring, security audit, and accessible reader.
             </p>
           </div>
 
@@ -188,14 +187,14 @@ export default function HomePage() {
 
         {/* Health Score Overview Ribbon */}
         {report && (
-          <div className="p-4 rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur-md flex flex-wrap items-center justify-between gap-4 shadow-xl">
+          <div className="p-4 rounded-xl border border-slate-800 bg-slate-900/80 flex flex-wrap items-center justify-between gap-4 shadow-sm">
             <div className="flex items-center gap-4">
               <HealthScoreBadge score={report.health.score} grade={report.health.grade} size="lg" />
               <div>
                 <div className="text-sm font-semibold text-white">Documentation Health Score</div>
                 <div className="text-xs text-slate-400 flex items-center gap-3 mt-0.5">
                   <span className="flex items-center gap-1">
-                    <Clock className="w-3.5 h-3.5 text-indigo-400" />
+                    <IconClock size={16} className="text-indigo-400" />
                     {report.readability.readingTimeMinutes} min read ({report.readability.wordCount} words)
                   </span>
                   <span>•</span>
@@ -212,11 +211,11 @@ export default function HomePage() {
                   ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
                   : 'bg-rose-500/10 text-rose-400 border-rose-500/30'
               }`}>
-                <Shield className="w-3.5 h-3.5" />
+                <IconShield size={16} />
                 {report.security.passed ? 'Security Clean' : `${report.security.threats.length} Threats Found`}
               </span>
               <span className="text-xs px-2.5 py-1 rounded-full font-medium border bg-indigo-500/10 text-indigo-400 border-indigo-500/30 flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5" />
+                <IconCheckCircle size={16} />
                 {report.lint.violations.length} Lint Violations
               </span>
             </div>
@@ -236,7 +235,7 @@ export default function HomePage() {
               : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
           }`}
         >
-          <BookOpen className="w-4 h-4" />
+          <IconBook size={16} />
           Reader
         </button>
         <button
@@ -249,7 +248,7 @@ export default function HomePage() {
               : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
           }`}
         >
-          <Sparkles className="w-4 h-4" />
+          <IconFile size={16} />
           Analysis & Health
         </button>
         <button
@@ -262,7 +261,7 @@ export default function HomePage() {
               : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
           }`}
         >
-          <Shield className="w-4 h-4" />
+          <IconShield size={16} />
           Security Audit
           {report && report.security.threats.length > 0 && (
             <span className="px-1.5 py-0.2 text-xs rounded-full bg-rose-500 text-white">
@@ -280,7 +279,7 @@ export default function HomePage() {
               : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
           }`}
         >
-          <Terminal className="w-4 h-4" />
+          <IconTerminal size={16} />
           Quick Start Extractor
         </button>
         <button
@@ -293,7 +292,7 @@ export default function HomePage() {
               : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
           }`}
         >
-          <CheckCircle2 className="w-4 h-4" />
+          <IconCheckCircle size={16} />
           Linter & SARIF
         </button>
         <button
@@ -306,7 +305,7 @@ export default function HomePage() {
               : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
           }`}
         >
-          <Code2 className="w-4 h-4" />
+          <IconCode size={16} />
           Editor Source
         </button>
       </div>
@@ -316,15 +315,15 @@ export default function HomePage() {
       {activeTab === 'reader' && (
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           <div className="lg:col-span-3">
-            <div className="p-8 rounded-2xl border border-slate-800 bg-slate-900/40 shadow-xl readmelens-content leading-relaxed">
+            <div className="p-8 rounded-xl border border-slate-800 bg-slate-900/40 shadow-sm readmelens-content leading-relaxed">
               <div dangerouslySetInnerHTML={{ __html: renderedHtml }} />
             </div>
           </div>
 
           <aside className="lg:col-span-1">
-            <div className="sticky top-24 p-5 rounded-2xl border border-slate-800 bg-slate-900/60 shadow-lg space-y-4">
+            <div className="sticky top-24 p-5 rounded-xl border border-slate-800 bg-slate-900/60 shadow-sm space-y-4">
               <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                <Layers className="w-4 h-4 text-indigo-400" />
+                <IconLayers size={16} className="text-indigo-400" />
                 Table of Contents
               </h3>
               <nav aria-label="Table of Contents">
@@ -374,16 +373,16 @@ export default function HomePage() {
               <div className="text-xl font-bold text-white mb-1 flex items-center gap-2">
                 {report.security.passed ? (
                   <span className="text-emerald-400 flex items-center gap-1.5">
-                    <CheckCircle2 className="w-5 h-5" /> Clean
+                    <IconCheckCircle size={20} /> Clean
                   </span>
                 ) : (
                   <span className="text-rose-400 flex items-center gap-1.5">
-                    <AlertTriangle className="w-5 h-5" /> Threat Detected
+                    <IconAlertTriangle size={20} /> Threat Detected
                   </span>
                 )}
               </div>
               <p className="text-xs text-slate-400">
-                {report.security.threats.length} issues identified across malicious shell pipes, base64, and injection triggers.
+                {report.security.threats.length} issues identified across shell execution, base64, and injection triggers.
               </p>
             </Card>
           </div>
@@ -486,7 +485,7 @@ export default function HomePage() {
                   }`}
                 >
                   {s.found ? (
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <IconCheckCircle size={16} className="text-emerald-400 shrink-0 mt-0.5" />
                   ) : (
                     <div className="w-4 h-4 rounded-full border border-slate-600 shrink-0 mt-0.5" />
                   )}
@@ -505,8 +504,8 @@ export default function HomePage() {
       {activeTab === 'security' && report && (
         <div className="space-y-6">
           {report.security.threats.length === 0 ? (
-            <div className="p-8 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 text-center">
-              <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto mb-3" />
+            <div className="p-8 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-center">
+              <IconCheckCircle size={24} className="text-emerald-400 mx-auto mb-3" />
               <h3 className="text-lg font-bold text-white">No Security Threats Detected</h3>
               <p className="text-sm text-slate-300 mt-1 max-w-md mx-auto">
                 No dangerous remote pipes (curl | bash), base64 encoded payloads, Trojan Source zero-width Unicode characters, or prompt injection triggers were found.
@@ -516,11 +515,11 @@ export default function HomePage() {
             report.security.threats.map(t => (
               <div
                 key={t.id}
-                className="p-5 rounded-2xl border border-rose-500/40 bg-rose-500/10 space-y-3"
+                className="p-5 rounded-xl border border-rose-500/40 bg-rose-500/10 space-y-3"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <AlertTriangle className="w-5 h-5 text-rose-400" />
+                    <IconAlertTriangle size={20} className="text-rose-400" />
                     <span className="font-bold text-white text-sm">{t.title}</span>
                   </div>
                   <Badge variant="danger">{t.severity.toUpperCase()}</Badge>
@@ -556,7 +555,8 @@ export default function HomePage() {
                     onClick={() => handleCopy(cmd || '')}
                     aria-label={`Copy ${pm} install command`}
                   >
-                    <Copy className="w-3.5 h-3.5" />
+                    <IconCopy size={16} />
+                    {copied && <span className="text-xs text-emerald-400">Copied</span>}
                   </Button>
                 </div>
               ))}
@@ -603,7 +603,7 @@ export default function HomePage() {
               onClick={handleDownloadSarif}
               aria-label="Download SARIF report"
             >
-              <Download className="w-3.5 h-3.5" />
+              <IconDownload size={16} />
               Download SARIF Report
             </Button>
           </div>
@@ -635,14 +635,14 @@ export default function HomePage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-mono text-slate-400">
-              Live Markdown Editor ({markdown.length} chars, {markdown.split('\n').length} lines)
+              Markdown Editor ({markdown.length} chars, {markdown.split('\n').length} lines)
             </span>
           </div>
           <textarea
             value={markdown}
             onChange={e => setMarkdown(e.target.value)}
-            className="w-full h-[550px] p-4 rounded-2xl border border-slate-800 bg-[#060911] font-mono text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 leading-relaxed resize-none"
-            placeholder="Type or paste markdown documentation here..."
+            className="w-full h-[550px] p-4 rounded-xl border border-slate-800 bg-[#060911] font-mono text-xs text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 leading-relaxed resize-none"
+            placeholder="Paste Markdown or enter documentation..."
             aria-label="Markdown content editor"
           />
         </div>
